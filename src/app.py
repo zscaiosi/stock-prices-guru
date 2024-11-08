@@ -1,12 +1,15 @@
 from flask import Flask, request
 from application.commands.save_stocks_data_command import SaveStocksDataCommand
 from application.commands.dtos import save_stocks_data_dto
+from application.commands.predict_price_query import PredictPriceQuery
+from adapters.respositories.query_model_repository import QueryModelRepository
 
 app = Flask(__name__)
 
 base_route = "/stocks-guru"
 
 save_stocks_command = SaveStocksDataCommand(None)
+predict_price_query = PredictPriceQuery(QueryModelRepository())
 
 @app.route(base_route + "/login", methods=["POST"])
 def post_login():
@@ -27,3 +30,9 @@ def post_save_stocks_data():
   ))
 
   return { "success": True }
+
+@app.route(base_route + "/stocks/<identifier>", methods=["GET"])
+def get_predict_stocks_price(identifier: str):
+  print("Querying data for {} at {}".format(identifier, request.args.get('date', '')))
+  
+  return predict_price_query.get_stock_price(identifier, request.args.get('date', ''))
