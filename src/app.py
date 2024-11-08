@@ -1,7 +1,7 @@
 from flask import Flask, request
 from application.commands.save_stocks_data_command import SaveStocksDataCommand
 from application.commands.dtos import save_stocks_data_dto
-from application.commands.predict_price_query import PredictPriceQuery
+from application.queries.predict_price_query import PredictPriceQuery
 from adapters.respositories.query_model_repository import QueryModelRepository
 
 app = Flask(__name__)
