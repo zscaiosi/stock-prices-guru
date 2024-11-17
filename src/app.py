@@ -34,5 +34,6 @@ def post_save_stocks_data():
 @app.route(base_route + "/stocks/<identifier>", methods=["GET"])
 def get_predict_stocks_price(identifier: str):
   print("Querying data for {} at {}".format(identifier, request.args.get('date', '')))
+  response_data = predict_price_query.get_stock_price(identifier, request.args.get('date', ''))
   
-  return predict_price_query.get_stock_price(identifier, request.args.get('date', ''))
+  return { "data": response_data.to_json() }
