@@ -2,7 +2,7 @@ from application.ports.dtos.stock_price_dto import StockPriceDto
 import json
 
 class QueryModelPort:
-  def get_stock_price(identifier: str, date_utc: str) -> StockPriceDto:
+  def get_stock_price(self, identifier: str, date_utc: str) -> StockPriceDto:
     pass
 
   def to_json(self):

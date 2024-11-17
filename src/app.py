@@ -36,4 +36,7 @@ def get_predict_stocks_price(identifier: str):
   print("Querying data for {} at {}".format(identifier, request.args.get('date', '')))
   response_data = predict_price_query.get_stock_price(identifier, request.args.get('date', ''))
   
+  if response_data == None:
+    return { "data": None }
+  
   return { "data": response_data.to_json() }

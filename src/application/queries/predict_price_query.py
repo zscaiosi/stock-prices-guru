@@ -1,6 +1,5 @@
 from application.ports.query_model_port import QueryModelPort
 from application.queries.dtos.predicted_stock_price_dto import PredictedStockPriceDto
-from datetime import datetime
 
 class PredictPriceQuery:
   def __init__(self, query_model_port: QueryModelPort):
@@ -10,4 +9,11 @@ class PredictPriceQuery:
     predicted_price = self.query_model_port.get_stock_price(stock_identifier, date_utc)
     print("Querying predicted price for {} at {}.".format(stock_identifier, date_utc))
     
-    return PredictedStockPriceDto(predicted_price.identifier, predicted_price.price, 0.035, predicted_price.date_utc)
+    if predicted_price == None:
+      return predicted_price
+    else:
+      return PredictedStockPriceDto(
+        predicted_price.identifier,
+        predicted_price.price,
+        predicted_price.date_utc
+      )
