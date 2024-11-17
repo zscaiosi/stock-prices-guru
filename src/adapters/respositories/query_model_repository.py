@@ -1,6 +1,5 @@
 from application.ports.query_model_port import QueryModelPort
 from application.ports.dtos.stock_price_dto import StockPriceDto
-from datetime import datetime
 import pymongo
 
 class QueryModelRepository(QueryModelPort):

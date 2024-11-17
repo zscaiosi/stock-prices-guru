@@ -3,13 +3,15 @@ from application.commands.save_stocks_data_command import SaveStocksDataCommand
 from application.commands.dtos import save_stocks_data_dto
 from application.queries.predict_price_query import PredictPriceQuery
 from adapters.respositories.query_model_repository import QueryModelRepository
+from adapters.respositories.command_publisher_repository import CommandPublisherRepository
 
 app = Flask(__name__)
 
 base_route = "/stocks-guru"
 
-save_stocks_command = SaveStocksDataCommand(None)
+save_stocks_command = SaveStocksDataCommand(CommandPublisherRepository())
 predict_price_query = PredictPriceQuery(QueryModelRepository())
+
 
 @app.route(base_route + "/login", methods=["POST"])
 def post_login():

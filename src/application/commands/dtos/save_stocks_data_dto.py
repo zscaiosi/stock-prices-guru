@@ -1,5 +1,5 @@
 class SaveStocksDataDto:
-  def __init__(self, identifier, price, utc_date_time):
+  def __init__(self, identifier, price, date_utc):
     self.identifier = identifier
     self.price = price
-    self.utc_date_time = utc_date_time
+    self.date_utc = date_utc
