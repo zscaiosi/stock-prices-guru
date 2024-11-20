@@ -2,6 +2,7 @@ from flask import Flask, request
 from application.commands.save_stocks_data_command import SaveStocksDataCommand
 from application.commands.dtos import save_stocks_data_dto
 from application.queries.predict_price_query import PredictPriceQuery
+from application.loaders.lstm_model_loader import LstmModelLoader
 from adapters.respositories.query_model_repository import QueryModelRepository
 from adapters.respositories.command_publisher_repository import CommandPublisherRepository
 
@@ -9,7 +10,10 @@ app = Flask(__name__)
 
 base_route = "/stocks-guru"
 
-save_stocks_command = SaveStocksDataCommand(CommandPublisherRepository())
+save_stocks_command = SaveStocksDataCommand(
+  CommandPublisherRepository(),
+  LstmModelLoader(QueryModelRepository())
+)
 predict_price_query = PredictPriceQuery(QueryModelRepository())
 
 
@@ -23,8 +27,6 @@ def post_login():
 
 @app.route(base_route + "/stocks/data", methods=["POST"])
 def post_save_stocks_data():
-  print("Request Data:")
-  print(request.json)
   save_stocks_command.handle(save_stocks_data_dto.SaveStocksDataDto(
     request.json.get("identifier"),
     request.json.get("price"),
