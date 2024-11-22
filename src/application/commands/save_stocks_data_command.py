@@ -1,6 +1,7 @@
 from application.ports.command_publisher_port import CommandPublisherPort
 from application.commands.dtos.save_stocks_data_dto import SaveStocksDataDto
 from application.loaders.lstm_model_loader import LstmModelLoader
+import json
 
 class SaveStocksDataCommand:
   def __init__(self, command_publisher_port: CommandPublisherPort, lstmLoader: LstmModelLoader):
@@ -17,7 +18,10 @@ class SaveStocksDataCommand:
     )
 
     predicted_prices = self.lstmLoader.train_from_data()
-    self.save_predicted_stock_prices(predicted_prices)
+    print("****")
+    print(json.dumps([ob.__dict__ for ob in predicted_prices]))
+    print("****")
+    self.command_publisher_port.save_predicted_stock_prices(predicted_prices)
 
   def __validateDto(self, dto: SaveStocksDataDto):
     if dto == None or dto.price == None or len(dto.identifier) < 3 or len(dto.date_utc) != 10:
