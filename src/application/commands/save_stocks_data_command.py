@@ -17,10 +17,11 @@ class SaveStocksDataCommand:
       dto.date_utc.strip()
     )
 
-    predicted_prices = self.lstmLoader.train_from_data()
-    print("****")
+    self.lstmLoader.load_model()
+    predicted_prices = self.lstmLoader.get_predicted_prices()
+    print("--- LSTM predicted prices: ---")
     print(json.dumps([ob.__dict__ for ob in predicted_prices]))
-    print("****")
+    print("*** ***")
     self.command_publisher_port.save_predicted_stock_prices(predicted_prices)
 
   def __validateDto(self, dto: SaveStocksDataDto):

@@ -15,7 +15,7 @@ class QueryModelRepository(QueryModelPort):
     }
 
     cursor = self.db["PredictedPrices"].find_one(query)
-
+    
     if cursor == None:
       return cursor
     else:
