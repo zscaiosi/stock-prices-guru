@@ -16,15 +16,6 @@ save_stocks_command = SaveStocksDataCommand(
 )
 predict_price_query = PredictPriceQuery(QueryModelRepository())
 
-
-@app.route(base_route + "/login", methods=["POST"])
-def post_login():
-  print("Request Data:")
-  print(request.json.get('password'))
-  print(request.json.get('username'))
-
-  return { "jwt": "" }
-
 @app.route(base_route + "/stocks/data", methods=["POST"])
 def post_save_stocks_data():
   save_stocks_command.handle(save_stocks_data_dto.SaveStocksDataDto(
